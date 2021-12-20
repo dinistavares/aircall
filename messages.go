@@ -79,6 +79,18 @@ type CallResponse struct {
 	Call Call `json:"call"`
 }
 
+type CallInsightCardContent struct {
+	Type  string `json:"type,omitempty"`
+	Text  string `json:"text,omitempty"`
+	Label string `json:"label,omitempty"`
+	Link  string `json:"link,omitempty"`
+}
+
+type CallInsightCardRequest struct {
+	Contents []CallInsightCardContent `json:"contents"`
+}
+
+
 type ContactsResponse struct {
 	Meta     ResponseMeta `json:"meta"`
 	Contacts []Contact    `json:"contacts"`
@@ -86,4 +98,18 @@ type ContactsResponse struct {
 
 type ContactResponse struct {
 	Contact Contact `json:"contact"`
+}
+
+type WebhooksResponse struct {
+	Meta     ResponseMeta `json:"meta"`
+	Webhooks []Webhook    `json:"webhooks"`
+}
+
+type WebhookRequest struct {
+	CustomName  string   `json:"custom_name,omitempty"`
+	URL    	    string   `json:"url,omitempty"`
+}
+
+type WebhookResponse struct {
+	Webhook Webhook `json:"webhook"`
 }

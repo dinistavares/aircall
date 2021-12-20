@@ -20,6 +20,7 @@ const (
 type Client struct {
 	AppID    string
 	AppToken string
+	AccessToken string
 	Version  string
 }
 
@@ -32,6 +33,18 @@ func NewClient(id, token string) *Client {
 	return &Client{
 		AppID:    id,
 		AppToken: token,
+		Version:  apiDefaultVersion,
+	}
+}
+
+// NewClient creates a new Client struct using the default API version
+//
+// client := aircall.NewClient(accessToken)
+// res, err := client.Ping()
+// fmt.Println(res.Ping) // "pong"
+func NewClientWithAccessToken(token string) *Client {
+	return &Client{
+		AccessToken: token,
 		Version:  apiDefaultVersion,
 	}
 }
@@ -55,13 +68,20 @@ func (client *Client) Delete(path string, params map[string]string) ([]byte, err
 func (client *Client) Request(method string, path string, params map[string]string, body interface{}) ([]byte, error) {
 	url := buildURL(client, path, params)
 	b, err := json.Marshal(body)
+
 	req, err := http.NewRequest(method, url, bytes.NewBuffer(b))
 
 	if err != nil {
 		return nil, err
 	}
 
-	req.Header.Add("Authorization", "Basic "+basicAuthHeader(client.AppID, client.AppToken))
+	req.Header.Set("Content-Type", "application/json")
+
+	if (client.AccessToken != "") {
+		req.Header.Add("Authorization", "Bearer "+ client.AccessToken)
+	} else {
+		req.Header.Add("Authorization", "Basic "+basicAuthHeader(client.AppID, client.AppToken))
+	}
 
 	c := &http.Client{}
 	res, err := c.Do(req)

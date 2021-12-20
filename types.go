@@ -70,3 +70,15 @@ type Call struct {
 	Comments   []string `json:"comments"`
 	Tags       []string `json:"tags"`
 }
+
+type Webhook struct {
+	ID         int      `json:"id"`
+	DirectLink string   `json:"direct_link"`
+	Status     string   `json:"status"`
+	CreatedAt  string   `json:"created_at"`
+	CustomName string   `json:"custom_name"`
+	URL 	   string   `json:"url"`
+	Active 	   bool   	`json:"active"`
+	Token 	   string   `json:"token"`
+	Events 	   []string `json:"events"`
+}

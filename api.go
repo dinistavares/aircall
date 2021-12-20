@@ -2,7 +2,6 @@ package aircall
 
 import (
 	"encoding/json"
-	"fmt"
 	"strconv"
 )
 
@@ -38,7 +37,7 @@ func (client *Client) Company() (CompanyResponse, error) {
 // Users API request
 func (client *Client) Users(paginate Paginate) (UsersResponse, error) {
 	params := buildPaginateParamsMap(paginate)
-	fmt.Println("%v", params)
+
 	data, err := client.Get("/users", params)
 	response := UsersResponse{}
 
@@ -175,6 +174,17 @@ func (client *Client) TransferCall(ID int, userID int) (CallResponse, error) {
 	return response, nil
 }
 
+// CreateInsighCards API request
+func (client *Client) CreateInsighCards(ID int, insightCards CallInsightCardRequest) (error) {
+	_, err := client.Post("/calls/"+strconv.Itoa(ID)+"/insight_cards", insightCards)
+
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 // DeleteRecording API request
 func (client *Client) DeleteRecording(callID int) (Response, error) {
 	data, err := client.Delete("/calls/"+strconv.Itoa(callID)+"/recording", map[string]string{})
@@ -283,6 +293,50 @@ func (client *Client) SearchContacts(paginate Paginate, search Search) (Contacts
 // DeleteContact API request
 func (client *Client) DeleteContact(ID int) (Response, error) {
 	data, err := client.Delete("/contacts/"+strconv.Itoa(ID), map[string]string{})
+	response := Response{}
+
+	if err != nil {
+		return response, err
+	}
+
+	json.Unmarshal(data, &response)
+
+	return response, nil
+}
+
+// Webhooks API request
+func (client *Client) Webhooks(paginate Paginate) (WebhooksResponse, error) {
+	params := buildPaginateParamsMap(paginate)
+	data, err := client.Get("/webhooks", params)
+
+	response := WebhooksResponse{}
+
+	if err != nil {
+		return response, err
+	}
+
+	json.Unmarshal(data, &response)
+
+	return response, nil
+}
+
+// CreateWebhook API request
+func (client *Client) CreateWebhook(webhook WebhookRequest) (WebhookResponse, error) {
+	data, err := client.Post("/webhooks", webhook)
+	response := WebhookResponse{}
+
+	if err != nil {
+		return response, err
+	}
+
+	json.Unmarshal(data, &response)
+
+	return response, nil
+}
+
+// DeleteWebhook API request
+func (client *Client) DeleteWebhook(ID int) (Response, error) {
+	data, err := client.Delete("/webhooks/"+strconv.Itoa(ID), map[string]string{})
 	response := Response{}
 
 	if err != nil {
