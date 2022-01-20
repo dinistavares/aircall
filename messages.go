@@ -24,12 +24,12 @@ type Search struct {
 }
 
 type ContactRequest struct {
-	FirstName    string        `json:"first_name"`
-	LastName     string        `json:"last_name"`
-	CompanyName  string        `json:"company_name"`
-	Information  string        `json:"information"`
-	PhoneNumbers []ContactInfo `json:"phone_numbers"`
-	Emails       []ContactInfo `json:"emails"`
+	FirstName    string        `json:"first_name,omitempty"`
+	LastName     string        `json:"last_name,omitempty"`
+	CompanyName  string        `json:"company_name,omitempty"`
+	Information  string        `json:"information,omitempty"`
+	PhoneNumbers []ContactInfo `json:"phone_numbers,omitempty"`
+	Emails       []ContactInfo `json:"emails,omitempty"`
 }
 
 type Response struct {
