@@ -1,7 +1,5 @@
 package aircall
 
-type Request struct{}
-
 type TransferCallRequest struct {
 	UserID int `json:"user_id"`
 }

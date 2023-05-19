@@ -1,13 +1,14 @@
 package aircall
 
 import (
-  "bytes"
-  "encoding/base64"
-  "encoding/json"
-  "errors"
-  "io/ioutil"
-  "net/http"
-  "net/url"
+	"bytes"
+	"encoding/base64"
+	"encoding/json"
+	"errors"
+	"io"
+	"io/ioutil"
+	"net/http"
+	"net/url"
 )
 
 const (
@@ -51,7 +52,7 @@ func NewClientWithAccessToken(token string) *Client {
 
 // Get is a shorthand of Request("GET", path, params, Request{})
 func (client *Client) Get(path string, params map[string]string) ([]byte, error) {
-  return client.Request("GET", path, params, Request{})
+  return client.Request("GET", path, params, nil)
 }
 
 // Post is a shorthand of Request("POST", path, params, Request{})
@@ -61,25 +62,25 @@ func (client *Client) Post(path string, request interface{}) ([]byte, error) {
 
 // Delete is a shorthand of Request("DELETE", path, params, Request{})
 func (client *Client) Delete(path string, params map[string]string) ([]byte, error) {
-  return client.Request("DELETE", path, params, Request{})
+  return client.Request("DELETE", path, params, nil)
 }
 
 // Request sends a HTTP request to the API
 func (client *Client) Request(method string, path string, params map[string]string, body interface{}) ([]byte, error) {
   url := buildURL(client, path, params)
-  b, err := json.Marshal(body)
-  
-  var (
-    req *http.Request
-  )
-  
-  // TODO: fix
-  if string(b) == "{}" {
-    req, err = http.NewRequest(method, url, nil)
-  } else {
-    req, err = http.NewRequest(method, url, bytes.NewBuffer(b))
+
+  var buf io.ReadWriter
+  if body != nil {
+    buf = new(bytes.Buffer)
+
+    err := json.NewEncoder(buf).Encode(body)
+    if err != nil {
+      return nil, err
+    }
   }
-  
+
+  req, err := http.NewRequest(method, url, buf)
+
   if err != nil {
     return nil, err
   }
