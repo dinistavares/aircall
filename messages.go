@@ -88,7 +88,6 @@ type CallInsightCardRequest struct {
 	Contents []CallInsightCardContent `json:"contents"`
 }
 
-
 type ContactsResponse struct {
 	Meta     ResponseMeta `json:"meta"`
 	Contacts []Contact    `json:"contacts"`
@@ -104,8 +103,8 @@ type WebhooksResponse struct {
 }
 
 type WebhookRequest struct {
-	CustomName  string   `json:"custom_name,omitempty"`
-	URL    	    string   `json:"url,omitempty"`
+	CustomName string `json:"custom_name,omitempty"`
+	URL        string `json:"url,omitempty"`
 }
 
 type WebhookResponse struct {

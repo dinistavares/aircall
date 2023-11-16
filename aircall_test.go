@@ -29,7 +29,7 @@ var (
 			PreviousPageLink: "",
 		},
 		Users: []User{
-			User{
+			{
 				ID:         147262,
 				DirectLink: "https://api.aircall.io/v1/users/147262",
 				Name:       "Test User",

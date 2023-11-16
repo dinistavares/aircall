@@ -175,7 +175,7 @@ func (client *Client) TransferCall(ID int, userID int) (CallResponse, error) {
 }
 
 // CreateInsighCards API request
-func (client *Client) CreateInsighCards(ID int, insightCards CallInsightCardRequest) (error) {
+func (client *Client) CreateInsighCards(ID int, insightCards CallInsightCardRequest) error {
 	_, err := client.Post("/calls/"+strconv.Itoa(ID)+"/insight_cards", insightCards)
 
 	if err != nil {

@@ -77,8 +77,8 @@ type Webhook struct {
 	Status     string   `json:"status"`
 	CreatedAt  string   `json:"created_at"`
 	CustomName string   `json:"custom_name"`
-	URL 	   string   `json:"url"`
-	Active 	   bool   	`json:"active"`
-	Token 	   string   `json:"token"`
-	Events 	   []string `json:"events"`
+	URL        string   `json:"url"`
+	Active     bool     `json:"active"`
+	Token      string   `json:"token"`
+	Events     []string `json:"events"`
 }
