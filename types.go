@@ -73,6 +73,7 @@ type Call struct {
 
 type Webhook struct {
 	ID         int      `json:"id"`
+	WebhookID  string   `json:"webhook_id"`
 	DirectLink string   `json:"direct_link"`
 	Status     string   `json:"status"`
 	CreatedAt  string   `json:"created_at"`
