@@ -335,8 +335,8 @@ func (client *Client) CreateWebhook(webhook WebhookRequest) (WebhookResponse, er
 }
 
 // DeleteWebhook API request
-func (client *Client) DeleteWebhook(ID int) (Response, error) {
-	data, err := client.Delete("/webhooks/"+strconv.Itoa(ID), map[string]string{})
+func (client *Client) DeleteWebhook(ID string) (Response, error) {
+	data, err := client.Delete("/webhooks/" + ID, map[string]string{})
 	response := Response{}
 
 	if err != nil {
